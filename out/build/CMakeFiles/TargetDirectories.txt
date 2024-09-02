@@ -1,0 +1,3 @@
+/Users/david/cppProjects/september24Projects/chess/out/build/CMakeFiles/CHESS.dir
+/Users/david/cppProjects/september24Projects/chess/out/build/CMakeFiles/edit_cache.dir
+/Users/david/cppProjects/september24Projects/chess/out/build/CMakeFiles/rebuild_cache.dir
