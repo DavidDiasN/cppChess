@@ -11,40 +11,28 @@ class King : PieceStrategy {
         }
 
         King::King(Team chosenTeam) {
-            if(chosenTeam < 1) {
+            if (chosenTeam < 1) {
                 throw InvalidTeamError("Pawn cannot be vacant");
             }
             team = chosenTeam;
             hasMoved = false;
         }
 
-        bool King::validMovement(const BoardPosition& origin, const BoardPosition& dest) {
-            int rowDisplacement = 0;
-            int colDisplacement = 0;
+        bool King::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
 
-            if(origin.getRow() > dest.getRow()) 
-                rowDisplacement = origin.getRow() - dest.getRow();
-            else
-                rowDisplacement = dest.getRow() - origin.getRow();
-            
-            if(origin.getCol() > dest.getCol()) 
-                rowDisplacement = origin.getCol() - dest.getCol();
-            else
-                colDisplacement = dest.getCol() - origin.getCol();
-
-            if(rowDisplacement <= 1 && colDisplacement <= 1)
+            if (abs(rowDisplacement) <= 1 && abs(colDisplacement) <= 1) {
+                vec[0] = rowDisplacement;
+                vec[1] = colDisplacement;
                 return true;
-            if(basicCastleCheck(origin, dest))
-                return true;
-            return false;
-        }
+            }
 
+            if (!hasMoved && abs(dest.getCol() - origin.getCol()) == 2) {
+                vec[0] = 0;
+                vec[1] = colDisplacement;
+            }
 
-        bool basicCastleCheck(const BoardPosition& origin, const BoardPosition& dest) {
-            if(hasMoved)
-                return false;
-            if(dest.getCol() == origin.getCol() + 2)
-                return true;
             
             return false;
         }
@@ -57,8 +45,15 @@ class King : PieceStrategy {
             hasMoved = true;
         }
 
+        bool King::hasSpecialMove() {
+            return specialMove;
+        }
+
+
     private:
         Team team;
         bool hasMoved;
+        bool specialMove;
+
 
 };

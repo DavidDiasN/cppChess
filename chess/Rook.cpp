@@ -18,10 +18,16 @@ class Rook : PieceStrategy {
             hasMoved = false;
         }
 
-        bool Rook::validMovement(const BoardPosition& origin, const BoardPosition& dest) {
-            if((origin.getRow() == dest.getRow()) != (origin.getCol() == dest.getCol())){
+        bool Rook::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
+
+            if (rowDisplacement == 0 || colDisplacement == 0) {
+                vec[0] = rowDisplacement;
+                vec[1] = colDisplacement;
                 return true;
             }
+            
             return false;
         }
 
@@ -33,8 +39,14 @@ class Rook : PieceStrategy {
             hasMoved = true;
         }
 
+        bool Rook::hasSpecialMove() {
+            return specialMove;
+        } 
+
+
     private:
         Team team;
         bool hasMoved;
+        bool specialMove;
 
 };

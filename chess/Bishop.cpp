@@ -16,28 +16,26 @@ class Bishop : PieceStrategy {
             team = chosenTeam;
         }
 
-        bool Bishop::validMovement(const BoardPosition& origin, const BoardPosition& dest) {
-            int rowDisplacement = 0;
-            int colDisplacement = 0;
+        bool Bishop::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
 
-            if(origin.getRow() > dest.getRow()) 
-                rowDisplacement = origin.getRow() - dest.getRow();
-            else
-                rowDisplacement = dest.getRow() - origin.getRow();
-            
-            if(origin.getCol() > dest.getCol()) 
-                rowDisplacement = origin.getCol() - dest.getCol();
-            else
-                colDisplacement = dest.getCol() - origin.getCol();
-
-            if(rowDisplacement == colDisplacement)
+            if (rowDisplacement/colDisplacement == 1 || rowDisplacement/colDisplacement == -1){
+                vec[0] = rowDisplacement;
+                vec[1] = colDisplacement;
                 return true;
+            }
             
             return false;
+        }
+
+        bool Bishop::hasSpecialMove() {
+            return specialMove;
         }
 
 
     private:
         Team team;
+        bool specialMove;
 
 };

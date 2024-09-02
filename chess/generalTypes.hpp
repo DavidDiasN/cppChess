@@ -33,11 +33,12 @@ class Board {
 
 class PieceStrategy {
   	public:
-        virtual bool validMovement(const BoardPosition& origin, const BoardPosition& dest) = 0;
+        virtual bool validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const = 0;
 		virtual Team getTeam() const = 0;
 	
 	private:
 		Team team;
+		bool specialMove;
 };
 
 class BoardBoundsError {

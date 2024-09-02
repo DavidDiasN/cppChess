@@ -21,20 +21,43 @@ class Pawn : PieceStrategy {
             direction = 1;
         }
 
-        bool Pawn::validMovement(const BoardPosition& origin, const BoardPosition& dest) const{
-            if (origin.getCol() + direction == dest.getRow() && (origin.getCol() + 1 == dest.getCol() || origin.getCol() - 1 == dest.getCol())) 
-                return true;
+        bool Pawn::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const{
+            // no movement in col means this is not an attack move.
+            if (origin.getCol() == dest.getCol()) {
+                if (origin.getRow() + direction == dest.getRow()) {
+                    vec[0] = direction;
+                    vec[1] = 0;
+                    return true;
+                } else if (origin.getRow() + direction * 2 == dest.getRow() && origin.getRow() == 1 || origin.getRow() == 6) {
+                    vec[0] = direction * 2;
+                    vec[1] = 0;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
-            if (validForwardMovement(origin, dest))
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
+
+            if (rowDisplacement = direction && abs(colDisplacement) == 1) {
+                vec[0] = direction;
+                vec[1] = colDisplacement;
                 return true;
+            } 
 
             return false;
+        }
+
+        bool Pawn::hasSpecialMove() {
+            return specialMove;
         }
 
 
     private:
         Team team;
         int direction;
+        bool specialMove;
 
         int validPawnAttack(BoardPosition origin, BoardPosition dest) {
 

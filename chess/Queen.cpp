@@ -16,42 +16,43 @@ class Queen : PieceStrategy {
             team = chosenTeam;
         }
 
-        bool Queen::validMovement(const BoardPosition& origin, const BoardPosition& dest) const{
-            return (RookMovement(origin, dest) || BishopMovement(origin, dest));
+        bool Queen::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const{
+            return (RookMovement(origin, dest, vec) || BishopMovement(origin, dest, vec));
         }
 
-        bool Queen::BishopMovement(const BoardPosition& origin, const BoardPosition& dest) const {
-            if(origin.getRow() == dest.getRow() || origin.getCol() == dest.getCol()) 
-                return false;
+        bool Queen::BishopMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const {
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
 
-            int rowDisplacement = 0;
-            int colDisplacement = 0;
-
-            if(origin.getRow() > dest.getRow()) 
-                rowDisplacement = origin.getRow() - dest.getRow();
-            else
-                rowDisplacement = dest.getRow() - origin.getRow();
-            
-            if(origin.getCol() > dest.getCol()) 
-                rowDisplacement = origin.getCol() - dest.getCol();
-            else
-                colDisplacement = dest.getCol() - origin.getCol();
-
-            if(rowDisplacement == colDisplacement)
+            if (rowDisplacement/colDisplacement == 1 || rowDisplacement/colDisplacement == -1){
+                vec[0] = rowDisplacement;
+                vec[1] = colDisplacement;
                 return true;
+            }
             
             return false;
         }
 
-        bool Queen::RookMovement(const BoardPosition& origin, const BoardPosition& dest) const {
-            if((origin.getRow() == dest.getRow()) != (origin.getCol() == dest.getCol())) 
-                return true;
+        bool Queen::RookMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const {
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
 
+            if (rowDisplacement == 0 || colDisplacement == 0){
+                vec[0] = rowDisplacement;
+                vec[1] = colDisplacement;
+                return true;
+            }
+            
             return false;
         }
+
+        bool Queen::hasSpecialMove() {
+            return specialMove;
+        } 
 
 
     private:
         Team team;
+        bool specialMove;
 
 };

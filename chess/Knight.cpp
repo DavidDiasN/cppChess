@@ -16,28 +16,25 @@ class Knight : PieceStrategy {
             team = chosenTeam;
         }
 
-        bool Knight::validMovement(const BoardPosition& origin, const BoardPosition& dest) {
-            int rowDisplacement = 0;
-            int colDisplacement = 0;
+        bool Knight::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[]) {
+            int rowDisplacement = dest.getRow() - origin.getRow();
+            int colDisplacement = dest.getCol() - origin.getCol();
 
-            if(origin.getRow() > dest.getRow()) 
-                rowDisplacement = origin.getRow() - dest.getRow();
-            else
-                rowDisplacement = dest.getRow() - origin.getRow();
-            
-            if(origin.getCol() > dest.getCol()) 
-                rowDisplacement = origin.getCol() - dest.getCol();
-            else
-                colDisplacement = dest.getCol() - origin.getCol();
-            
-            if(rowDisplacement == 1 && colDisplacement == 2 || rowDisplacement == 2 && colDisplacement == 1)
+            if(abs(rowDisplacement) == 1 && abs(colDisplacement) == 2 || abs(rowDisplacement) == 2 && abs(colDisplacement) == 1) {
+                vec[0] = rowDisplacement;
+                vec[1] = colDisplacement;
                 return true;
+            }
 
             return false;
         }
 
+        bool Knight::hasSpecialMove() {
+            return specialMove;
+        }
 
     private:
         Team team;
+        bool specialMove;
 
 };

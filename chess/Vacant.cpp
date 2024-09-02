@@ -7,10 +7,16 @@ class Vacant : PieceStrategy {
             return team;
         }
 
-        bool Vacant::validMovement(const PieceStrategy& origin, const PieceStrategy& dest) const {
+        bool Vacant::validMovement(const PieceStrategy& origin, const PieceStrategy& dest, int vec[2]) const {
             return false;
         }
 
+
+        bool Vacant::hasSpecialMove() {
+            return false;
+        } 
+
     private: 
         Team team = VACANT;
+        bool specialMove = false;
 };
