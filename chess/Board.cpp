@@ -10,9 +10,20 @@ class Board {
                 return;
 
             int vec[2] = {0, 0};
+
+            // the is it possible for the piece section
             
-            if(!this->getPiece(origin).validMovement(origin, dest, vec))
+            if (!this->getPiece(origin).validMovement(origin, dest, vec))
                 return;
+
+            // check if the path a piece takes is greateer than 1 in vec[0] and vec[1]
+            if (!this->getPiece(origin).boardContextMovement(*this, origin, dest, vec))
+                return;
+
+
+
+
+            // end of is it possible for the piece section
 
 
             // now I have a vector that I can use to iterate through a pieces movement path.

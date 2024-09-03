@@ -37,6 +37,30 @@ class King : PieceStrategy {
             return false;
         }
 
+
+		bool King::boardContextMovement(const Board& board, const BoardPosition& origin, const BoardPosition& dest, const int vec[2]) const {
+            // simple forward movement
+            if (vec[1] == 0) {
+                if (board.getPiece(BoardPosition(origin.getRow() + direction, origin.getCol())).getTeam() == VACANT) {
+                    if (vec[0] == direction) 
+                        return true;
+                    else if (board.getPiece(BoardPosition(origin.getRow() + direction * 2, origin.getCol())).getTeam() == VACANT)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+
+            Team destinationTeam = board.getPiece(BoardPosition(origin.getRow() + vec[0], origin.getCol() + vec[1])).getTeam(); 
+            if (destinationTeam != team && destinationTeam != VACANT) 
+                return true;
+
+            if (BoardPosition(origin.getRow(), origin.getCol() + vec[1]) == board.getInPassingPiece()) 
+                return true;
+
+            return false;
+        }
+
         bool King::getHasMoved() const {
             return hasMoved;
         }

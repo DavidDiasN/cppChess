@@ -35,17 +35,6 @@ class BoardPosition {
     	int col;
 };
 
-class Board {
-	public:
-		PieceStrategy getPiece(BoardPosition pos) const;	
-		void movePiece(BoardPosition origin, BoardPosition dest);
-		BoardPosition getInPassingPiece() const;
-
-	private:
-		BoardPosition board[8][8];
-		BoardPosition inPassingPiece;
-};
-
 class PieceStrategy {
   	public:
         virtual bool validMovement(const Board& board, const PieceStrategy& origin, const PieceStrategy& dest) = 0;

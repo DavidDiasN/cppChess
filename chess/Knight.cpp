@@ -16,7 +16,7 @@ class Knight : PieceStrategy {
             team = chosenTeam;
         }
 
-        bool Knight::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[]) {
+        bool Knight::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
             int rowDisplacement = dest.getRow() - origin.getRow();
             int colDisplacement = dest.getCol() - origin.getCol();
 
@@ -27,6 +27,11 @@ class Knight : PieceStrategy {
             }
 
             return false;
+        }
+
+
+		bool Knight::boardContextMovement(const Board& board, const BoardPosition& origin, const BoardPosition& dest, const int vec[2]) const {
+            return true;
         }
 
         bool Knight::hasSpecialMove() {
