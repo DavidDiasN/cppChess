@@ -59,6 +59,32 @@ class Board {
             return inPassingPiece;
         }
 
+        bool Board::positionIsUnderAttack() const {
+            // at every step of checks you will simply need to 
+            // each piece type will be searched for until either a firendly piece is found to be obstructing the attack path
+            // or the board goes out of bounds.
+            // each type of pieces attack path will need to be investigated which essentially means 
+            // we will search for any and all lines of attack
+
+            // bishop line of attack will return true if searching the attack vectors returns a bishop of the enemy side
+            // or a queen of the enemy side.
+            // same goes for the rook.
+
+            // knight will be easy, you simply need to look for an enemy knight at any valid knight square and if there is a knight
+            // you need to check if its team is not equal to your team.
+
+            // checking for kings and pawns should be pretty easy. 
+            // whites king can only be threatened by an enemy pawn that is -1 rows and + or -1 colums away from it.
+            // vice versa for black
+
+            // either king can only be threatened by antoher king if their position is one hop from another king
+
+
+
+
+            return false;
+        }
+
 	private:
 		BoardPosition board[8][8];
 		BoardPosition inPassingPiece;
