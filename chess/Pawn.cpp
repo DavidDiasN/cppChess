@@ -1,24 +1,23 @@
 #include "generalTypes.hpp"
+#include <string>
 
 
 
-class Pawn : PieceStrategy {
+class Pawn : public Piece {
     public:
-        Pawn::Pawn() {
-            team = WHITE;
-            direction = -1;
-        }
+        Pawn::Pawn() : Piece("Pawn", WHITE, true), direction{-1} {}
 
         Pawn::Pawn(Team chosenTeam) {
-            if(chosenTeam < 1) {
-                throw InvalidTeamError("Pawn cannot be vacant");
-            }
-            team = chosenTeam;
-            if(team == 1) {
+            if (chosenTeam == 2) 
+                direction = 1;
+            else if(team == 1)
                 direction = -1;
-                return;
-            }
-            direction = 1;
+            else
+                throw InvalidTeamError("Pawn cannot be vacant");
+
+            team = chosenTeam;
+            specialMove = true;
+            name = "Pawn";
         }
 
         bool Pawn::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const{
@@ -50,19 +49,18 @@ class Pawn : PieceStrategy {
         }
 
 		bool Pawn::boardContextMovement(const Board& board, const BoardPosition& origin, const BoardPosition& dest, const int vec[2]) const {
-            // simple forward movement
             if (vec[1] == 0) {
-                if (board.getPiece(BoardPosition(origin.getRow() + direction, origin.getCol())).getTeam() == VACANT) {
+                if (board.getPiece(BoardPosition(origin.getRow() + direction, origin.getCol()))->getTeam() == VACANT) {
                     if (vec[0] == direction) 
                         return true;
-                    else if (board.getPiece(BoardPosition(origin.getRow() + direction * 2, origin.getCol())).getTeam() == VACANT)
+                    else if (board.getPiece(BoardPosition(origin.getRow() + direction * 2, origin.getCol()))->getTeam() == VACANT)
                         return true;
                     else
                         return false;
                 }
             }
 
-            Team destinationTeam = board.getPiece(BoardPosition(origin.getRow() + vec[0], origin.getCol() + vec[1])).getTeam(); 
+            Team destinationTeam = board.getPiece(BoardPosition(origin.getRow() + vec[0], origin.getCol() + vec[1]))->getTeam(); 
             if (destinationTeam != team && destinationTeam != VACANT) 
                 return true;
 
@@ -79,9 +77,7 @@ class Pawn : PieceStrategy {
 
 
     private:
-        Team team;
         int direction;
-        bool specialMove;
 
         int validPawnAttack(BoardPosition origin, BoardPosition dest) {
 

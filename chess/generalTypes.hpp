@@ -22,22 +22,32 @@ class BoardPosition {
 
 class Board {
 	public:
-		PieceStrategy getPiece(BoardPosition pos) const;	
+		Board();
+		Piece* getPiece(BoardPosition pos) const;
 		void movePiece(BoardPosition origin, BoardPosition dest);
 		BoardPosition getInPassingPiece() const;
+		~Board();
 
 	private:
-		BoardPosition board[8][8];
+		Piece* board[8][8];
 		BoardPosition inPassingPiece;
 };
 
-class PieceStrategy {
+class Piece {
   	public:
+
+        Piece() {};
+        Piece(std::string name) {};
+        Piece(std::string name, Team team, bool specialMove) {};
         virtual bool validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const = 0;
 		virtual bool boardContextMovement(const Board& board, const BoardPosition& origin, const BoardPosition& dest, const int vec[2]) const = 0;
-		virtual Team getTeam() const = 0;
+		Team getTeam() const;
+		std::string getName() const;
+		bool hasSpecialMove() const;
+		virtual ~Piece() = 0;
 	
-	private:
+	protected:
+		std::string name;
 		Team team;
 		bool specialMove;
 };

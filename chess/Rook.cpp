@@ -1,21 +1,19 @@
 #include <string>
 #include "generalTypes.hpp"
 
-
-class Rook : PieceStrategy {
+class Rook : public Piece {
 
     public:
-        Rook::Rook() {
-            team = WHITE;
-            hasMoved = false;
-        }
+        Rook::Rook() : Piece("Rook", WHITE, true), hasMoved{false} {}
 
         Rook::Rook(Team chosenTeam) {
             if(chosenTeam < 1) {
-                throw InvalidTeamError("Pawn cannot be vacant");
+                throw InvalidTeamError("Rook cannot be vacant");
             }
             team = chosenTeam;
             hasMoved = false;
+            specialMove = false;
+            name = "Rook";
         }
 
         bool Rook::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
@@ -47,7 +45,7 @@ class Rook : PieceStrategy {
                 vectorTransformation[1] = 0;
 
             while(counter < abs(vec[0] + vec[1])) {
-                if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter)).getTeam() != VACANT)
+                if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter))->getTeam() != VACANT)
                     return false;
                 counter++;
             }
@@ -55,22 +53,12 @@ class Rook : PieceStrategy {
             return true;
         }
 
-        bool Rook::getHasMoved() const {
-            return hasMoved;
-        }
+        bool Rook::getHasMoved() const { return hasMoved; }
 
-        void Rook::completedFirstMove() {
-            hasMoved = true;
-        }
+        void Rook::completedFirstMove() { hasMoved = true; }
 
-        bool Rook::hasSpecialMove() {
-            return specialMove;
-        } 
-
+        bool Rook::hasSpecialMove() { return specialMove; } 
 
     private:
-        Team team;
         bool hasMoved;
-        bool specialMove;
-
 };

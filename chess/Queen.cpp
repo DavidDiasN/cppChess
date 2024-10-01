@@ -1,19 +1,18 @@
 #include <string>
 #include "generalTypes.hpp"
 
-
-class Queen : PieceStrategy {
+class Queen : public Piece {
 
     public:
-        Queen::Queen() {
-            team = WHITE;
-        }
+        Queen::Queen() : Piece("Queen") {}
 
         Queen::Queen(Team chosenTeam) {
             if(chosenTeam < 1) {
-                throw InvalidTeamError("Pawn cannot be vacant");
+                throw InvalidTeamError("Queen cannot be vacant");
             }
             team = chosenTeam;
+            specialMove = false;
+            name = "Queen";
         }
 
         bool Queen::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const{
@@ -33,7 +32,6 @@ class Queen : PieceStrategy {
             return false;
         }
 
-
 		bool Queen::boardContextMovement(const Board& board, const BoardPosition& origin, const BoardPosition& dest, const int vec[2]) const {
             if (vec[0] == 0 || vec[1] == 0) {
                 int vectorTransformation[2] = {1, 1};
@@ -50,14 +48,13 @@ class Queen : PieceStrategy {
                     vectorTransformation[1] = 0;
 
                 while(counter < abs(vec[0] + vec[1])) {
-                    if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter)).getTeam() != VACANT)
+                    if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter))->getTeam() != VACANT)
                         return false;
                     counter++;
                 }
 
                 return true;
             } else {
-
                 int vectorTransformation[2] = {1, 1};
                 int counter = 1;
                 if (vec[0] < vectorTransformation[0]) 
@@ -67,13 +64,12 @@ class Queen : PieceStrategy {
                     vectorTransformation[1] = -1;
 
                 while(counter < abs(vec[0])) {
-                    if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter)).getTeam() != VACANT)
+                    if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter))->getTeam() != VACANT)
                         return false;
                     counter++;
                 }
 
                 return true;
-
             }
         }
 
@@ -89,14 +85,4 @@ class Queen : PieceStrategy {
             
             return false;
         }
-
-        bool Queen::hasSpecialMove() {
-            return specialMove;
-        } 
-
-
-    private:
-        Team team;
-        bool specialMove;
-
 };

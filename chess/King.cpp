@@ -2,20 +2,19 @@
 #include "generalTypes.hpp"
 
 
-class King : PieceStrategy {
+class King : public Piece {
 
     public:
-        King::King() {
-            team = WHITE;
-            hasMoved = false;
-        }
+        King::King() : Piece("King"), hasMoved{false} {}
 
         King::King(Team chosenTeam) {
             if (chosenTeam < 1) {
-                throw InvalidTeamError("Pawn cannot be vacant");
+                throw InvalidTeamError("King cannot be vacant");
             }
             team = chosenTeam;
             hasMoved = false;
+            specialMove = true;
+            name = "King";
         }
 
         bool King::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
@@ -52,15 +51,7 @@ class King : PieceStrategy {
             hasMoved = true;
         }
 
-        bool King::hasSpecialMove() {
-            return specialMove;
-        }
-
-
     private:
-        Team team;
         bool hasMoved;
-        bool specialMove;
-
 
 };

@@ -2,18 +2,18 @@
 #include "generalTypes.hpp"
 
 
-class Bishop : PieceStrategy {
+class Bishop : public Piece {
 
     public:
-        Bishop::Bishop() {
-            team = WHITE;
-        }
+        Bishop::Bishop() : Piece("Bishop") {}
 
         Bishop::Bishop(Team chosenTeam) {
             if(chosenTeam < 1) {
-                throw InvalidTeamError("Pawn cannot be vacant");
+                throw InvalidTeamError("Bishop cannot be vacant");
             }
             team = chosenTeam;
+            specialMove = false;
+            name = "Bishop";
         }
 
         bool Bishop::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) {
@@ -40,7 +40,7 @@ class Bishop : PieceStrategy {
                 vectorTransformation[1] = -1;
 
             while(counter < abs(vec[0])) {
-                if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter)).getTeam() != VACANT)
+                if (board.getPiece(BoardPosition(origin.getRow() + vectorTransformation[0] * counter, origin.getCol() + vectorTransformation[1] * counter))->getTeam() != VACANT)
                     return false;
                 counter++;
             }
@@ -48,13 +48,5 @@ class Bishop : PieceStrategy {
             return true;
         }
 
-        bool Bishop::hasSpecialMove() {
-            return specialMove;
-        }
-
-
-    private:
-        Team team;
-        bool specialMove;
 
 };

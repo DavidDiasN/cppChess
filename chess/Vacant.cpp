@@ -1,22 +1,13 @@
 #include "generalTypes.hpp"
 
-
-class Vacant : PieceStrategy {
+class Vacant : public Piece {
     public:
-        Team Vacant::getTeam() {
-            return team;
-        }
+        Vacant() : Piece("Vacant", VACANT, false) {}
 
-        bool Vacant::validMovement(const PieceStrategy& origin, const PieceStrategy& dest, int vec[2]) const {
-            return false;
-        }
+        Team Vacant::getTeam() { return team; }
 
+        bool Vacant::validMovement(const BoardPosition& origin, const BoardPosition& dest, int vec[2]) const { return false; }
 
-        bool Vacant::hasSpecialMove() {
-            return false;
-        } 
+        bool Vacant::hasSpecialMove() { return false; } 
 
-    private: 
-        Team team = VACANT;
-        bool specialMove = false;
 };

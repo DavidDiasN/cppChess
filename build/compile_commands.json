@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/david/cppProjects/september24Projects/chess/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -o CMakeFiles/CHESS.dir/chess/chess.cpp.o -c /Users/david/cppProjects/september24Projects/chess/chess/chess.cpp",
+  "file": "/Users/david/cppProjects/september24Projects/chess/chess/chess.cpp",
+  "output": "CMakeFiles/CHESS.dir/chess/chess.cpp.o"
+}
+]
